@@ -58,3 +58,16 @@ pub fn capture_screen() -> Result<ImageBuffer<Rgb<u8>, Vec<u8>>, xcb::Error> {
 
     Ok(img)
 }
+
+pub fn capture_n_screens(
+    num_screens: usize,
+) -> Result<Vec<ImageBuffer<Rgb<u8>, Vec<u8>>>, xcb::Error> {
+    let mut imgs = Vec::new();
+
+    for _ in 0..num_screens {
+        let img = capture_screen()?;
+        imgs.push(img);
+    }
+
+    Ok(imgs)
+}
