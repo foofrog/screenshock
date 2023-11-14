@@ -27,3 +27,14 @@ ________     /  #### ############  |       _|           .'
               `-._   `' .'
                   `-._.'
 ````
+### TODO: (Implement)
+- [x] Fullscreen capturing
+- [ ] Window-specific capturing
+- [ ] Configurable region capturing
+- [ ] Dynamic image saving from consecutive screenshots with configurable options: Frame-rate, Duration
+- [ ] Static and Dynamic image saving in multiple output formats:
+  - [x] PNG  (Static)
+  - [ ] BMP  (Static)
+  - [ ] JPEG (Static)
+  - [ ] GIF  (Dynamic)
+  - [ ] WEBP (Static & Dynamic)
