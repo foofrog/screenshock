@@ -1,9 +1,23 @@
 [package]
 name = "screenshock"
+description = "A basic implementation of a screenshot utility for Linux computers running the X display server"
 version = "0.1.0"
 edition = "2021"
+readme = "README.md"
+license-file = "LICENSE"
+repository = "https://github.com/foofrog/screenshock"
+keywords = ["x11", "xcb", "cli", "linux", "utility"]
+categories = ["utility"]
+authors = ["foofrog <foobarbazqux@skiff.com>"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.release]
+opt-level = 3
+lto = "fat"
+debug = false
+
+[[bin]]
+name = "screenshock"
+path = "src/main.rs"
 
 [dependencies]
 chrono = "0.4.31"
