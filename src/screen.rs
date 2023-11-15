@@ -1,6 +1,8 @@
 use image::{ImageBuffer, Rgb};
 use xcb::{self, x, Connection};
 
+type ImageBufferType = ImageBuffer<Rgb<u8>, Vec<u8>>;
+
 pub struct ScreenRes {
     pub width: u16,
     pub height: u16,
@@ -15,8 +17,8 @@ pub fn get_screen_res() -> Result<ScreenRes, xcb::Error> {
         .next()
         .ok_or(xcb::Error::Connection(xcb::ConnError::ClosedInvalidScreen))?;
 
-    let width = screen.width_in_pixels() as u16;
-    let height = screen.height_in_pixels() as u16;
+    let width = screen.width_in_pixels();
+    let height = screen.height_in_pixels();
 
     Ok(ScreenRes { height, width })
 }
@@ -34,8 +36,8 @@ pub fn capture_screen() -> Result<ImageBuffer<Rgb<u8>, Vec<u8>>, xcb::Error> {
         drawable: x::Drawable::Window(screen.root()),
         x: 0,
         y: 0,
-        width: screen_res.width.into(),
-        height: screen_res.height.into(),
+        width: screen_res.width,
+        height: screen_res.height,
         plane_mask: !0,
     };
 
@@ -59,9 +61,7 @@ pub fn capture_screen() -> Result<ImageBuffer<Rgb<u8>, Vec<u8>>, xcb::Error> {
     Ok(img)
 }
 
-pub fn capture_num_screens(
-    num_screens: usize,
-) -> Result<Vec<ImageBuffer<Rgb<u8>, Vec<u8>>>, xcb::Error> {
+pub fn capture_num_screens(num_screens: usize) -> Result<Vec<ImageBufferType>, xcb::Error> {
     let mut imgs = Vec::new();
 
     for _ in 0..num_screens {
