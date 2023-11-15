@@ -1,6 +1,8 @@
 use image::{ImageBuffer, Rgb};
 use xcb::{self, x, Connection};
 
+type ImageBufferType = ImageBuffer<Rgb<u8>, Vec<u8>>;
+
 pub struct ScreenRes {
     pub width: u16,
     pub height: u16,
@@ -59,9 +61,7 @@ pub fn capture_screen() -> Result<ImageBuffer<Rgb<u8>, Vec<u8>>, xcb::Error> {
     Ok(img)
 }
 
-pub fn capture_num_screens(
-    num_screens: usize,
-) -> Result<Vec<ImageBuffer<Rgb<u8>, Vec<u8>>>, xcb::Error> {
+pub fn capture_num_screens(num_screens: usize) -> Result<Vec<ImageBufferType>, xcb::Error> {
     let mut imgs = Vec::new();
 
     for _ in 0..num_screens {
