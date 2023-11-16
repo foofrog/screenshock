@@ -23,7 +23,7 @@ pub fn get_screen_res() -> Result<ScreenRes, xcb::Error> {
     Ok(ScreenRes { height, width })
 }
 
-pub fn capture_screen() -> Result<ImageBuffer<Rgb<u8>, Vec<u8>>, xcb::Error> {
+pub fn capture_screen() -> Result<ImageBufferType, xcb::Error> {
     let (conn, screen_num) = Connection::connect(None)?;
     let setup = conn.get_setup();
     let screen = setup.roots().nth(screen_num as usize).unwrap();
