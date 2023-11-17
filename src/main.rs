@@ -13,11 +13,11 @@ fn main() {
     }
 
     match capture_screen() {
-        Ok(img) => {
+        Ok(cap) => {
             let timestamp = Utc::now().format("%Y%m%d%H%M%S").to_string();
             let filename = format!("capture_{}.png", timestamp);
 
-            img.save(&filename).unwrap();
+            cap.save(&filename).unwrap();
             println!("Screen was captured and saved as: {}", filename);
         }
         Err(e) => eprintln!("Failed to capture screen: {}", e),
