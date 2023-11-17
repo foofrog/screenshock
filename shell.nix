@@ -11,6 +11,9 @@ pkgs.mkShell {
     libclang
     gcc
 
+    # Required for screenshock
+    xorg.xcbutil
+
     # Required for the openssl-sys crate
     # <https://nixos.wiki/wiki/Rust#Building_Rust_crates_that_require_external_system_libraries>
     openssl
