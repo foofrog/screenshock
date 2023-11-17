@@ -1,7 +1,7 @@
 use image::{ImageBuffer, Rgb};
 use xcb::{self, x, Connection};
 
-type ImageBufferType = ImageBuffer<Rgb<u8>, Vec<u8>>;
+pub type ImageBufferType = ImageBuffer<Rgb<u8>, Vec<u8>>;
 
 pub struct ScreenRes {
     pub width: u16,
@@ -29,9 +29,9 @@ pub fn capture_screen() -> Result<ImageBufferType, xcb::Error> {
     let screen = setup.roots().nth(screen_num as usize).unwrap();
 
     let screen_res = get_screen_res()?;
-    let mut img = ImageBuffer::new(screen_res.width.into(), screen_res.height.into());
+    let mut cap = ImageBuffer::new(screen_res.width.into(), screen_res.height.into());
 
-    let get_img = x::GetImage {
+    let get_cap = x::GetImage {
         format: x::ImageFormat::ZPixmap,
         drawable: x::Drawable::Window(screen.root()),
         x: 0,
@@ -41,7 +41,7 @@ pub fn capture_screen() -> Result<ImageBufferType, xcb::Error> {
         plane_mask: !0,
     };
 
-    let cookie = conn.send_request(&get_img);
+    let cookie = conn.send_request(&get_cap);
     let reply = conn.wait_for_reply(cookie).unwrap();
 
     let data = reply.data();
@@ -54,11 +54,11 @@ pub fn capture_screen() -> Result<ImageBufferType, xcb::Error> {
             let g = data[i + 1];
             let b = data[i];
 
-            img.put_pixel(x as u32, y as u32, Rgb([r, g, b]));
+            cap.put_pixel(x as u32, y as u32, Rgb([r, g, b]));
         }
     }
 
-    Ok(img)
+    Ok(cap)
 }
 
 pub fn capture_num_screens(num_screens: usize) -> Result<Vec<ImageBufferType>, xcb::Error> {
