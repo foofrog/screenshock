@@ -1,7 +1,7 @@
 [package]
 name = "screenshock"
 description = "A basic implementation of a screenshot utility for Linux computers running the X display server"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 readme = "README.md"
 license-file = "LICENSE"
