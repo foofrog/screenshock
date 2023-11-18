@@ -62,12 +62,11 @@ pub fn capture_screen() -> Result<ImageBufferType, xcb::Error> {
 }
 
 pub fn capture_num_screens(num_screens: usize) -> Result<Vec<ImageBufferType>, xcb::Error> {
-    let mut imgs = Vec::new();
+    let mut caps = Vec::new();
 
     for _ in 0..num_screens {
-        let img = capture_screen()?;
-        imgs.push(img);
+        let cap = capture_screen()?;
+        caps.push(cap)
     }
-
-    Ok(imgs)
+    Ok(caps)
 }
